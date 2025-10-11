@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeeMelody - Acoustic Monitoring of Beehive Health</title>
+    <style>
+        :root {
+            --honey-dark: #FF8C00;
+            --honey-main: #FFA500;
+            --honey-light: #FFB84D;
+            --honey-pale: #FFE4B3;
+            --bg-light: #FAFAFA;
+            --bg-white: #FFFFFF;
+            --text-dark: #2D2D2D;
+            --text-gray: #666666;
+            --text-light: #999999;
+            --border-light: #E8E8E8;
+            --shadow: rgba(255, 140, 0, 0.15);
+            --shadow-dark: rgba(0, 0, 0, 0.08);
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --critical: #F44336;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(180deg, #FFFFFF 0%, #FFF8F0 50%, #FFE4B3 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+        }
+
+        /* Hexagon Pattern Background */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.03;
+            z-index: 0;
+            background-image:
+                url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 0l35 20v40L40 80 5 60V20z' fill='none' stroke='%23FFA500' stroke-width='2'/%3E%3C/svg%3E");
+            background-size: 80px 80px;
+            animation: patternFloat 40s linear infinite;
+        }
+
+        @keyframes patternFloat {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(80px, 80px); }
+        }
+
+        /* Floating Honey Drops */
+        .honey-drops {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .honey-drop {
+            position: absolute;
+            width: 4px;
+            height: 12px;
+            background: linear-gradient(180deg, transparent, var(--honey-light));
+            border-radius: 0 0 50% 50%;
+            animation: dropFall 8s linear infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes dropFall {
+            0% {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        /* Interactive Bee - DOKUNULMAYACAK */
+        .interactive-bee {
+            position: fixed;
+            top: 50%;
+            right: 5%;
+            width: 270px;
+            height: 100px;
+            transform: scale(0.4) translate(100%, -100%);
+            transform-origin: 100% 50%;
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        .interactive-bee:hover {
+            transform: scale(0.45) translate(80%, -100%);
+        }
+
+        .bee {
+            height: 100px;
+            width: 270px;
+            background-color: rgba(255, 255, 255, 0.4);
+            position: absolute;
+            border-radius: 50px;
+            animation: fly 4s infinite;
+        }
+
+        @keyframes fly {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-50px); }
+        }
+
+        .bee:before {
+            position: absolute;
+            content: "";
+            height: 200px;
+            width: 140px;
+            background: linear-gradient(
+                #ffec02 70%,
+                #202020 70%,
+                #202020 75%,
+                #ffec02 75%,
+                #ffec02 80%,
+                #202020 80%,
+                #202020 85%,
+                #ffec02 85%,
+                #ffec02 90%,
+                #202020 90%,
+                #202020 95%,
+                #ffec02 95%
+            );
+            border-radius: 70px;
+            left: 65px;
+            bottom: -45px;
+        }
+        
+        .eye, .eye:before {
+            position: absolute;
+            height: 13.5px;
+            width: 25px;
+            border: 7px solid #202020;
+            border-radius: 20px 20px 0 0;
+            bottom: 95px;
+            border-bottom: none;
+        }
+        .eye { left: 98px; }
+        .eye:before { content: ""; bottom: 0; left: 40px; }
+
+        .antenna, .antenna:before {
+            position: absolute;
+            height: 50px;
+            width: 8px;
+            background-color: #202020;
+        }
+        .antenna {
+            left: 164px;
+            bottom: 130px;
+            transform: rotate(25deg);
+            z-index: -1;
+        }
+        .antenna:before {
+            content: "";
+            right: 55px;
+            top: 25px;
+            transform: rotate(-50deg);
+        }
+        .antenna:after {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            background-color: #202020;
+            border-radius: 50%;
+            left: -6px;
+            bottom: 40px;
+            box-shadow: -72px 35px #202020;
+        }
+
+        .mouth {
+            position: absolute;
+            height: 40px;
+            width: 80px;
+            background: radial-gradient(circle at 50% 100%, #ff90a3 15px, #202020 16px);
+            top: 20px;
+            left: 93px;
+            border-radius: 0 0 40px 40px;
+        }
+        .mouth:before {
+            position: absolute;
+            content: "";
+            height: 10px;
+            width: 50px;
+            background-color: #ffffff;
+            left: 14px;
+            top: -0.5px;
+        }
+
+        .mode-indicator {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%) scale(2.5);
+            background: var(--honey-main);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            color: white;
+            box-shadow: 0 4px 12px var(--shadow);
+            white-space: nowrap;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 4rem 2rem 3rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo-icon {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, var(--honey-main), var(--honey-dark));
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            position: relative;
+            animation: blobFloat 6s ease-in-out infinite;
+            box-shadow: 0 15px 40px var(--shadow);
+        }
+
+        .logo-icon::before {
+            content: '🐝';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        @keyframes blobFloat {
+            0%, 100% {
+                border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+                transform: translateY(0px) rotate(0deg);
+            }
+            25% {
+                border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%;
+            }
+            50% {
+                border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%;
+                transform: translateY(-15px) rotate(5deg);
+            }
+            75% {
+                border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%;
+            }
+        }
+
+        h1 {
+            font-size: 4rem;
+            background: linear-gradient(135deg, var(--honey-dark), var(--honey-main));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 900;
+            margin: 0;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            color: var(--text-gray);
+            margin-top: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Analysis Card */
+        .analysis-card-wrapper {
+            position: relative;
+            min-height: 600px;
+        }
+        
+        .analysis-card {
+            background: var(--bg-white);
+            border-radius: 40px;
+            box-shadow: 
+                0 30px 80px var(--shadow-dark),
+                0 0 0 1px var(--border-light);
+            overflow: hidden;
+            position: relative;
+            min-height: inherit;
+        }
+
+        /* Honey Drip Border Top */
+        .analysis-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, 
+                var(--honey-main) 0%, 
+                var(--honey-light) 25%,
+                var(--honey-main) 50%,
+                var(--honey-light) 75%,
+                var(--honey-main) 100%);
+            background-size: 200% 100%;
+            animation: honeyFlow 4s linear infinite;
+            z-index: 2;
+        }
+
+        @keyframes honeyFlow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        /* Mode Transition */
+        .mode-transition {
+            padding: 4rem 3rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: none;
+        }
+
+        .mode-transition.active {
+            opacity: 1;
+            transform: translateY(0);
+            position: relative;
+            pointer-events: auto;
+            display: block;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2.5rem;
+            gap: 1.5rem;
+        }
+
+        .card-icon {
+            font-size: 5rem;
+            filter: drop-shadow(0 4px 8px rgba(255, 140, 0, 0.2));
+            animation: iconBounce 3s ease-in-out infinite;
+        }
+
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.05); }
+        }
+
+        .card-title {
+            font-size: 3rem;
+            background: linear-gradient(135deg, var(--honey-dark), var(--honey-main));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            margin: 0;
+        }
+
+        .card-description {
+            color: var(--text-gray);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+            font-size: 1.15rem;
+            text-align: center;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Upload Area */
+        .upload-area {
+            border: 3px dashed var(--honey-light);
+            border-radius: 25px;
+            padding: 4rem 3rem;
+            text-align: center;
+            background: linear-gradient(135deg, 
+                rgba(255, 228, 179, 0.2) 0%, 
+                rgba(255, 255, 255, 0.5) 100%);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            margin-bottom: 2.5rem;
+            overflow: hidden;
+        }
+
+        .upload-area::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 165, 0, 0.1), 
+                transparent);
+            transition: left 0.6s;
+        }
+
+        .upload-area:hover::before {
+            left: 100%;
+        }
+
+        .upload-area:hover {
+            border-color: var(--honey-main);
+            background: linear-gradient(135deg, 
+                rgba(255, 228, 179, 0.4) 0%, 
+                rgba(255, 255, 255, 0.7) 100%);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px var(--shadow);
+        }
+
+        .upload-area.dragover {
+            border-color: var(--honey-dark);
+            background: rgba(255, 228, 179, 0.5);
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 4px 8px var(--shadow));
+        }
+
+        .upload-text {
+            color: var(--text-dark);
+            font-weight: 700;
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .upload-subtext {
+            font-size: 1.05rem;
+            color: var(--text-light);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        /* Audio Visualizer */
+        .audio-visualizer {
+            height: 140px;
+            background: linear-gradient(135deg, 
+                rgba(255, 228, 179, 0.3), 
+                rgba(255, 255, 255, 0.5));
+            border-radius: 20px;
+            margin: 2.5rem 0;
+            display: none;
+            align-items: end;
+            justify-content: center;
+            gap: 4px;
+            padding: 20px;
+            border: 2px solid var(--honey-pale);
+            box-shadow: inset 0 2px 10px rgba(255, 165, 0, 0.1);
+        }
+
+        .bar {
+            width: 6px;
+            background: linear-gradient(to top, var(--honey-dark), var(--honey-light));
+            border-radius: 4px;
+            transition: height 0.2s ease;
+            min-height: 6px;
+            box-shadow: 0 2px 4px var(--shadow);
+        }
+
+        /* Image Preview */
+        .image-preview {
+            display: none;
+            margin: 2.5rem auto;
+            padding: 20px;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.8), 
+                rgba(255, 228, 179, 0.3));
+            border-radius: 25px;
+            box-shadow: 0 10px 30px var(--shadow);
+            max-width: 450px;
+            text-align: center;
+            border: 2px solid var(--honey-pale);
+        }
+
+        .preview-img {
+            max-width: 100%;
+            height: auto;
+            max-height: 280px;
+            object-fit: contain;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px var(--shadow-dark);
+            border: 3px solid white;
+        }
+
+        /* Button */
+        .analyze-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--honey-dark), var(--honey-main));
+            color: white;
+            border: none;
+            padding: 1.5rem 2.5rem;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 0 15px 35px var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .analyze-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .analyze-btn:not(:disabled):hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .analyze-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .analyze-btn:not(:disabled):hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 50px rgba(255, 140, 0, 0.3);
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 4rem;
+        }
+
+        .loading.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .honeycomb-loader {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .honeycomb-loader::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--honey-main), var(--honey-dark));
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            animation: honeycombSpin 2s ease-in-out infinite;
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+
+        @keyframes honeycombSpin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.15); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .loading-text {
+            font-size: 1.3rem;
+            color: var(--honey-dark);
+            font-weight: 700;
+        }
+
+        /* Results */
+        .results {
+            background: var(--bg-white);
+            border-radius: 35px;
+            padding: 3rem;
+            margin-top: 2.5rem;
+            box-shadow: 
+                0 25px 70px var(--shadow-dark),
+                0 0 0 1px var(--border-light);
+            border-top: 6px solid var(--honey-main);
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+            animation: slideUp 0.7s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .results-title {
+            font-size: 2.2rem;
+            background: linear-gradient(135deg, var(--honey-dark), var(--honey-main));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+            font-weight: 800;
+            text-align: center;
+        }
+
+        .result-item {
+            display: flex;
+            align-items: center;
+            padding: 1.8rem 2rem;
+            margin: 1.2rem 0;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.8), 
+                rgba(255, 248, 240, 0.8));
+            border-radius: 20px;
+            border-left: 6px solid;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .result-item:hover {
+            transform: translateX(8px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-item.healthy { 
+            border-left-color: var(--success);
+            background: linear-gradient(135deg, 
+                rgba(76, 175, 80, 0.05), 
+                rgba(255, 255, 255, 0.8));
+        }
+        .result-item.warning { 
+            border-left-color: var(--warning);
+            background: linear-gradient(135deg, 
+                rgba(255, 152, 0, 0.05), 
+                rgba(255, 255, 255, 0.8));
+        }
+        .result-item.critical { 
+            border-left-color: var(--critical);
+            background: linear-gradient(135deg, 
+                rgba(244, 67, 54, 0.05), 
+                rgba(255, 255, 255, 0.8));
+        }
+
+        .result-icon {
+            font-size: 2.5rem;
+            margin-right: 1.8rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .result-text {
+            flex: 1;
+        }
+
+        .result-value {
+            font-weight: 800;
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-description {
+            color: var(--text-gray);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .interactive-bee {
+                right: 2%;
+                transform: scale(0.3) translate(100%, -100%);
+            }
+            .interactive-bee:hover {
+                transform: scale(0.35) translate(80%, -100%);
+            }
+
+            h1 {
+                font-size: 2.8rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .card-title {
+                font-size: 2.2rem;
+            }
+            
+            .analysis-card-wrapper {
+                min-height: 550px;
+            }
+            .mode-transition {
+                padding: 2.5rem 2rem;
+            }
+
+            .result-item {
+                padding: 1.5rem;
+            }
+
+            .upload-area {
+                padding: 3rem 2rem;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    
+    <!-- Animated Honey Drops -->
+    <div class="honey-drops">
+        <div class="honey-drop" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="honey-drop" style="left: 25%; animation-delay: 2s;"></div>
+        <div class="honey-drop" style="left: 40%; animation-delay: 4s;"></div>
+        <div class="honey-drop" style="left: 60%; animation-delay: 1s;"></div>
+        <div class="honey-drop" style="left: 75%; animation-delay: 3s;"></div>
+        <div class="honey-drop" style="left: 90%; animation-delay: 5s;"></div>
+    </div>
+
+    <div class="interactive-bee" id="modeSwitcher">
+        <div class="bee">
+            <div class="eye"></div>
+            <div class="antenna"></div>
+            <div class="mouth"></div>
+        </div>
+        <div class="mode-indicator" id="modeIndicator">Görsel Analiz</div>
+    </div>
+
+    <header>
+        <div class="logo">
+            <div class="logo-icon"></div>
+            <div>
+                <h1>BeeMelody</h1>
+                <p class="subtitle">Acoustic Monitoring of Beehive Health</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="analysis-card-wrapper">
+            <div class="analysis-card">
+
+                <div class="mode-transition active" id="audioMode">
+                    <div class="card-header">
+                        <span class="card-icon">🎵</span>
+                        <h2 class="card-title">Ses Analizi</h2>
+                    </div>
+
+                    <p class="card-description">
+                        Arı kovanınızdan kaydettiğiniz ses dosyasını yükleyerek kovan sağlığını analiz edin.
+                        Gelişmiş yapay zeka algoritmaları ile arıların davranış kalıplarını ve sağlık durumunu değerlendiriyoruz.
+                    </p>
+
+                    <div class="upload-area" onclick="document.getElementById('audioFile').click()">
+                        <div class="upload-icon">🎤</div>
+                        <p class="upload-text">Ses dosyasını buraya sürükleyin veya tıklayın</p>
+                        <p class="upload-subtext">Desteklenen formatlar: WAV, MP3, M4A (Maks. 10MB)</p>
+                    </div>
+                    <input type="file" id="audioFile" class="file-input" accept=".wav,.mp3,.m4a" />
+
+                    <div class="audio-visualizer" id="audioVisualizer"></div>
+
+                    <button class="analyze-btn" id="analyzeAudio" disabled>
+                        🔍 Ses Analizi Başlat
+                    </button>
+                </div>
+
+                <div class="mode-transition" id="imageMode">
+                    <div class="card-header">
+                        <span class="card-icon">📸</span>
+                        <h2 class="card-title">Görsel Analizi</h2>
+                    </div>
+
+                    <p class="card-description">
+                        Arı fotoğraflarını yükleyerek detaylı görsel sağlık analizi yapın.
+                        Bilgisayarlı görü teknolojisi ile arıların fiziksel durumunu ve hastalık belirtilerini tespit ediyoruz.
+                    </p>
+
+                    <div class="upload-area" onclick="document.getElementById('imageFile').click()">
+                        <div class="upload-icon">📷</div>
+                        <p class="upload-text">Arı fotoğrafını buraya sürükleyin veya tıklayın</p>
+                        <p class="upload-subtext">Desteklenen formatlar: JPG, PNG, WEBP (Maks. 5MB)</p>
+                    </div>
+                    <input type="file" id="imageFile" class="file-input" accept=".jpg,.jpeg,.png,.webp" />
+
+                    <div class="image-preview" id="imagePreview">
+                        <img id="previewImg" class="preview-img" alt="Yüklenen Arı Fotoğrafı" />
+                    </div>
+
+                    <button class="analyze-btn" id="analyzeImage" disabled>
+                        🔍 Görsel Analizi Başlat
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="honeycomb-loader"></div>
+            <p class="loading-text">Yapay zeka modeli çalışıyor... Lütfen bekleyin.</p>
+        </div>
+
+        <div class="results" id="results">
+            <h3 class="results-title">📊 Analiz Sonuçları</h3>
+            <div id="resultsContent"></div>
+        </div>
+    </div>
+
+    <script>
+        const modeSwitcher = document.getElementById('modeSwitcher');
+        const modeIndicator = document.getElementById('modeIndicator');
+        const audioMode = document.getElementById('audioMode');
