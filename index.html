@@ -94,14 +94,14 @@
             }
         }
 
-        /* Interactive Bee - DOKUNULMAYACAK */
+        /* Interactive Bee */
         .interactive-bee {
             position: fixed;
             top: 50%;
-            right: 5%;
+            right: 15%;
             width: 270px;
             height: 100px;
-            transform: scale(0.4) translate(100%, -100%);
+            transform: scale(0.3) translate(100%, -100%);
             transform-origin: 100% 50%;
             cursor: pointer;
             z-index: 100;
@@ -109,16 +109,17 @@
         }
         
         .interactive-bee:hover {
-            transform: scale(0.45) translate(80%, -100%);
+            transform: scale(0.35) translate(80%, -100%);
         }
 
         .bee {
             height: 100px;
             width: 270px;
-            background-color: rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 200, 100, 0.7);
             position: absolute;
             border-radius: 50px;
             animation: fly 4s infinite;
+            box-shadow: 0 2px 8px rgba(255, 165, 0, 0.3);
         }
 
         @keyframes fly {
@@ -229,7 +230,7 @@
         /* Header */
         header {
             text-align: center;
-            padding: 4rem 2rem 3rem;
+            padding: 2rem 1.5rem 1.5rem;
             position: relative;
             z-index: 10;
         }
@@ -238,18 +239,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 2rem;
-            margin-bottom: 1.5rem;
+            gap: 1.2rem;
+            margin-bottom: 1rem;
         }
 
         .logo-icon {
-            width: 90px;
-            height: 90px;
+            width: 50px;
+            height: 50px;
             background: linear-gradient(135deg, var(--honey-main), var(--honey-dark));
             border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
             position: relative;
             animation: blobFloat 6s ease-in-out infinite;
-            box-shadow: 0 15px 40px var(--shadow);
+            box-shadow: 0 10px 25px var(--shadow);
         }
 
         .logo-icon::before {
@@ -258,7 +259,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 3rem;
+            font-size: 1.8rem;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
         }
 
@@ -280,7 +281,7 @@
         }
 
         h1 {
-            font-size: 4rem;
+            font-size: 2.5rem;
             background: linear-gradient(135deg, var(--honey-dark), var(--honey-main));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -291,17 +292,17 @@
         }
 
         .subtitle {
-            font-size: 1.4rem;
+            font-size: 1rem;
             color: var(--text-gray);
-            margin-top: 0.8rem;
+            margin-top: 0.5rem;
             font-weight: 500;
         }
 
         /* Main Container */
         .container {
-            max-width: 950px;
+            max-width: 750px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 1.5rem;
             position: relative;
             z-index: 10;
         }
@@ -309,14 +310,14 @@
         /* Analysis Card */
         .analysis-card-wrapper {
             position: relative;
-            min-height: 600px;
+            min-height: 450px;
         }
         
         .analysis-card {
             background: var(--bg-white);
-            border-radius: 40px;
+            border-radius: 25px;
             box-shadow: 
-                0 30px 80px var(--shadow-dark),
+                0 20px 50px var(--shadow-dark),
                 0 0 0 1px var(--border-light);
             overflow: hidden;
             position: relative;
@@ -330,7 +331,7 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 8px;
+            height: 5px;
             background: linear-gradient(90deg, 
                 var(--honey-main) 0%, 
                 var(--honey-light) 25%,
@@ -349,7 +350,7 @@
 
         /* Mode Transition */
         .mode-transition {
-            padding: 4rem 3rem;
+            padding: 2rem 2rem;
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
@@ -374,12 +375,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 2.5rem;
-            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            gap: 1rem;
         }
 
         .card-icon {
-            font-size: 5rem;
+            font-size: 2.5rem;
             filter: drop-shadow(0 4px 8px rgba(255, 140, 0, 0.2));
             animation: iconBounce 3s ease-in-out infinite;
         }
@@ -390,7 +391,7 @@
         }
 
         .card-title {
-            font-size: 3rem;
+            font-size: 1.8rem;
             background: linear-gradient(135deg, var(--honey-dark), var(--honey-main));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -401,20 +402,20 @@
 
         .card-description {
             color: var(--text-gray);
-            margin-bottom: 2.5rem;
-            line-height: 1.8;
-            font-size: 1.15rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
             text-align: center;
-            max-width: 700px;
+            max-width: 600px;
             margin-left: auto;
             margin-right: auto;
         }
 
         /* Upload Area */
         .upload-area {
-            border: 3px dashed var(--honey-light);
-            border-radius: 25px;
-            padding: 4rem 3rem;
+            border: 2px dashed var(--honey-light);
+            border-radius: 18px;
+            padding: 2.5rem 2rem;
             text-align: center;
             background: linear-gradient(135deg, 
                 rgba(255, 228, 179, 0.2) 0%, 
@@ -422,7 +423,7 @@
             transition: all 0.4s ease;
             cursor: pointer;
             position: relative;
-            margin-bottom: 2.5rem;
+            margin-bottom: 1.5rem;
             overflow: hidden;
         }
 
@@ -449,8 +450,8 @@
             background: linear-gradient(135deg, 
                 rgba(255, 228, 179, 0.4) 0%, 
                 rgba(255, 255, 255, 0.7) 100%);
-            transform: translateY(-5px);
-            box-shadow: 0 20px 50px var(--shadow);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px var(--shadow);
         }
 
         .upload-area.dragover {
@@ -460,20 +461,20 @@
         }
 
         .upload-icon {
-            font-size: 4.5rem;
-            margin-bottom: 1.5rem;
+            font-size: 3rem;
+            margin-bottom: 1rem;
             filter: drop-shadow(0 4px 8px var(--shadow));
         }
 
         .upload-text {
             color: var(--text-dark);
             font-weight: 700;
-            font-size: 1.4rem;
-            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
         }
 
         .upload-subtext {
-            font-size: 1.05rem;
+            font-size: 0.85rem;
             color: var(--text-light);
         }
 
@@ -483,53 +484,112 @@
 
         /* Audio Visualizer */
         .audio-visualizer {
-            height: 140px;
+            height: 100px;
             background: linear-gradient(135deg, 
                 rgba(255, 228, 179, 0.3), 
                 rgba(255, 255, 255, 0.5));
-            border-radius: 20px;
-            margin: 2.5rem 0;
+            border-radius: 15px;
+            margin: 1.5rem 0;
             display: none;
             align-items: end;
             justify-content: center;
-            gap: 4px;
-            padding: 20px;
+            gap: 3px;
+            padding: 15px;
             border: 2px solid var(--honey-pale);
             box-shadow: inset 0 2px 10px rgba(255, 165, 0, 0.1);
+            position: relative;
         }
 
         .bar {
-            width: 6px;
+            width: 5px;
             background: linear-gradient(to top, var(--honey-dark), var(--honey-light));
-            border-radius: 4px;
+            border-radius: 3px;
             transition: height 0.2s ease;
-            min-height: 6px;
+            min-height: 5px;
             box-shadow: 0 2px 4px var(--shadow);
+        }
+
+        /* File Info Display */
+        .file-info {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.2rem;
+            margin: 1rem 0;
+            background: linear-gradient(135deg, 
+                rgba(76, 175, 80, 0.1), 
+                rgba(255, 255, 255, 0.9));
+            border-radius: 15px;
+            border-left: 4px solid var(--success);
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .file-info.show {
+            display: flex;
+        }
+
+        .file-details {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .file-icon {
+            font-size: 1.5rem;
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+        }
+
+        .file-size {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .remove-file-btn {
+            background: var(--critical);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .remove-file-btn:hover {
+            background: #d32f2f;
+            transform: scale(1.05);
         }
 
         /* Image Preview */
         .image-preview {
             display: none;
-            margin: 2.5rem auto;
-            padding: 20px;
+            margin: 1.5rem auto;
+            padding: 15px;
             background: linear-gradient(135deg, 
                 rgba(255, 255, 255, 0.8), 
                 rgba(255, 228, 179, 0.3));
-            border-radius: 25px;
-            box-shadow: 0 10px 30px var(--shadow);
-            max-width: 450px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px var(--shadow);
+            max-width: 350px;
             text-align: center;
             border: 2px solid var(--honey-pale);
+            position: relative;
         }
 
         .preview-img {
             max-width: 100%;
             height: auto;
-            max-height: 280px;
+            max-height: 200px;
             object-fit: contain;
-            border-radius: 15px;
-            box-shadow: 0 15px 40px var(--shadow-dark);
-            border: 3px solid white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px var(--shadow-dark);
+            border: 2px solid white;
         }
 
         /* Button */
@@ -538,15 +598,15 @@
             background: linear-gradient(135deg, var(--honey-dark), var(--honey-main));
             color: white;
             border: none;
-            padding: 1.5rem 2.5rem;
-            border-radius: 20px;
-            font-size: 1.2rem;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            font-size: 1rem;
             font-weight: 800;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            box-shadow: 0 15px 35px var(--shadow);
+            letter-spacing: 1px;
+            box-shadow: 0 10px 25px var(--shadow);
             position: relative;
             overflow: hidden;
         }
@@ -585,7 +645,7 @@
         .loading {
             display: none;
             text-align: center;
-            padding: 4rem;
+            padding: 2.5rem;
         }
 
         .loading.show {
@@ -594,9 +654,9 @@
         }
 
         .honeycomb-loader {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 2rem;
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 1.5rem;
             position: relative;
         }
 
@@ -608,7 +668,7 @@
             background: linear-gradient(135deg, var(--honey-main), var(--honey-dark));
             clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
             animation: honeycombSpin 2s ease-in-out infinite;
-            box-shadow: 0 10px 30px var(--shadow);
+            box-shadow: 0 8px 20px var(--shadow);
         }
 
         @keyframes honeycombSpin {
@@ -618,7 +678,7 @@
         }
 
         .loading-text {
-            font-size: 1.3rem;
+            font-size: 1rem;
             color: var(--honey-dark);
             font-weight: 700;
         }
@@ -626,13 +686,13 @@
         /* Results */
         .results {
             background: var(--bg-white);
-            border-radius: 35px;
-            padding: 3rem;
-            margin-top: 2.5rem;
+            border-radius: 25px;
+            padding: 2rem;
+            margin-top: 2rem;
             box-shadow: 
-                0 25px 70px var(--shadow-dark),
+                0 20px 50px var(--shadow-dark),
                 0 0 0 1px var(--border-light);
-            border-top: 6px solid var(--honey-main);
+            border-top: 4px solid var(--honey-main);
             display: none;
         }
 
@@ -647,12 +707,12 @@
         }
 
         .results-title {
-            font-size: 2.2rem;
+            font-size: 1.6rem;
             background: linear-gradient(135deg, var(--honey-dark), var(--honey-main));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             font-weight: 800;
             text-align: center;
         }
@@ -660,20 +720,20 @@
         .result-item {
             display: flex;
             align-items: center;
-            padding: 1.8rem 2rem;
-            margin: 1.2rem 0;
+            padding: 1.2rem 1.5rem;
+            margin: 1rem 0;
             background: linear-gradient(135deg, 
                 rgba(255, 255, 255, 0.8), 
                 rgba(255, 248, 240, 0.8));
-            border-radius: 20px;
-            border-left: 6px solid;
+            border-radius: 15px;
+            border-left: 4px solid;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
 
         .result-item:hover {
-            transform: translateX(8px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transform: translateX(5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
 
         .result-item.healthy { 
@@ -696,8 +756,8 @@
         }
 
         .result-icon {
-            font-size: 2.5rem;
-            margin-right: 1.8rem;
+            font-size: 2rem;
+            margin-right: 1.2rem;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
 
@@ -708,14 +768,14 @@
         .result-value {
             font-weight: 800;
             color: var(--text-dark);
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
         }
 
         .result-description {
             color: var(--text-gray);
-            font-size: 1rem;
-            line-height: 1.5;
+            font-size: 0.85rem;
+            line-height: 1.4;
         }
 
         /* Responsive Design */
@@ -729,7 +789,11 @@
             }
 
             h1 {
-                font-size: 2.8rem;
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 0.9rem;
             }
 
             .container {
@@ -737,22 +801,22 @@
             }
 
             .card-title {
-                font-size: 2.2rem;
+                font-size: 1.5rem;
             }
             
             .analysis-card-wrapper {
-                min-height: 550px;
+                min-height: 400px;
             }
             .mode-transition {
-                padding: 2.5rem 2rem;
+                padding: 1.5rem 1.2rem;
             }
 
             .result-item {
-                padding: 1.5rem;
+                padding: 1rem;
             }
 
             .upload-area {
-                padding: 3rem 2rem;
+                padding: 2rem 1.5rem;
             }
         }
 
@@ -809,12 +873,23 @@
                         Gelişmiş yapay zeka algoritmaları ile arıların davranış kalıplarını ve sağlık durumunu değerlendiriyoruz.
                     </p>
 
-                    <div class="upload-area" onclick="document.getElementById('audioFile').click()">
+                    <div class="upload-area" id="audioUploadArea" onclick="document.getElementById('audioFile').click()">
                         <div class="upload-icon">🎤</div>
                         <p class="upload-text">Ses dosyasını buraya sürükleyin veya tıklayın</p>
                         <p class="upload-subtext">Desteklenen formatlar: WAV, MP3, M4A (Maks. 10MB)</p>
                     </div>
                     <input type="file" id="audioFile" class="file-input" accept=".wav,.mp3,.m4a" />
+
+                    <div class="file-info" id="audioFileInfo">
+                        <div class="file-details">
+                            <span class="file-icon">🎵</span>
+                            <div>
+                                <div class="file-name" id="audioFileName"></div>
+                                <div class="file-size" id="audioFileSize"></div>
+                            </div>
+                        </div>
+                        <button class="remove-file-btn" id="removeAudioFile">🗑️ Sil</button>
+                    </div>
 
                     <div class="audio-visualizer" id="audioVisualizer"></div>
 
@@ -834,12 +909,23 @@
                         Bilgisayarlı görü teknolojisi ile arıların fiziksel durumunu ve hastalık belirtilerini tespit ediyoruz.
                     </p>
 
-                    <div class="upload-area" onclick="document.getElementById('imageFile').click()">
+                    <div class="upload-area" id="imageUploadArea" onclick="document.getElementById('imageFile').click()">
                         <div class="upload-icon">📷</div>
                         <p class="upload-text">Arı fotoğrafını buraya sürükleyin veya tıklayın</p>
                         <p class="upload-subtext">Desteklenen formatlar: JPG, PNG, WEBP (Maks. 5MB)</p>
                     </div>
                     <input type="file" id="imageFile" class="file-input" accept=".jpg,.jpeg,.png,.webp" />
+
+                    <div class="file-info" id="imageFileInfo">
+                        <div class="file-details">
+                            <span class="file-icon">📸</span>
+                            <div>
+                                <div class="file-name" id="imageFileName"></div>
+                                <div class="file-size" id="imageFileSize"></div>
+                            </div>
+                        </div>
+                        <button class="remove-file-btn" id="removeImageFile">🗑️ Sil</button>
+                    </div>
 
                     <div class="image-preview" id="imagePreview">
                         <img id="previewImg" class="preview-img" alt="Yüklenen Arı Fotoğrafı" />
@@ -865,6 +951,284 @@
     </div>
 
     <script>
-        const modeSwitcher = document.getElementById('modeSwitcher');
-        const modeIndicator = document.getElementById('modeIndicator');
-        const audioMode = document.getElementById('audioMode');
+        const resultMap = {
+            0: "Kraliçe arı mevcut (orijinal kraliçe)",
+            1: "Kraliçe arı mevcut değil",
+            2: "Kraliçe arı reddedilmiş durumda",
+            3: "Yeni kraliçe arı kabul edilmiş"
+        };
+
+        // Sonuçları ekranda göster
+        function displayResults(queenStatus, confidence, type) {
+            const resultsContent = document.getElementById('resultsContent');
+            const statusText = resultMap[queenStatus];
+            
+            // Durum türüne göre stil belirle
+            let statusClass = 'healthy';
+            let icon = '✅';
+            let statusMessage = '';
+            
+            if (queenStatus === 0) {
+                statusClass = 'healthy';
+                icon = '👑';
+                statusMessage = 'Kraliçe arı mevcut ve koloni sağlıklı';
+            } else if (queenStatus === 1) {
+                statusClass = 'critical';
+                icon = '⚠️';
+                statusMessage = 'Kraliçe arı mevcut değil - Acil müdahale gerekli';
+            } else if (queenStatus === 2) {
+                statusClass = 'warning';
+                icon = '🔄';
+                statusMessage = 'Kraliçe arı reddedilmiş durumda';
+            } else {
+                statusClass = 'healthy';
+                icon = '🆕';
+                statusMessage = 'Yeni kraliçe arı kabul edilmiş';
+            }
+            
+            const confidencePercent = (confidence * 100).toFixed(1);
+            
+            resultsContent.innerHTML = `
+                <div class="result-item ${statusClass}">
+                    <div class="result-icon">${icon}</div>
+                    <div class="result-text">
+                        <div class="result-value">Kraliçe Durumu</div>
+                        <div class="result-description">${statusText}</div>
+                    </div>
+                </div>
+                
+                <div class="result-item ${statusClass}">
+                    <div class="result-icon">📊</div>
+                    <div class="result-text">
+                        <div class="result-value">Güven Skoru: %${confidencePercent}</div>
+                        <div class="result-description">${statusMessage}</div>
+                    </div>
+                </div>
+                
+                <div class="result-item ${statusClass}">
+                    <div class="result-icon">${type === 'audio' ? '🎵' : '📸'}</div>
+                    <div class="result-text">
+                        <div class="result-value">Analiz Türü</div>
+                        <div class="result-description">${type === 'audio' ? 'Ses Analizi' : 'Görsel Analizi'}</div>
+                    </div>
+                </div>
+            `;
+            
+            // Sonuçları göster
+            document.getElementById('results').classList.add('show');
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Ses analizi
+        async function analyzeAudio(file) {
+            const loading = document.getElementById('loading');
+            const results = document.getElementById('results');
+            
+            // Önceki sonuçları temizle
+            results.classList.remove('show');
+            
+            // Yükleniyor animasyonunu göster
+            loading.classList.add('show');
+            
+            try {
+                const formData = new FormData();
+                formData.append('file', file);
+
+                const response = await fetch('/analyze/audio', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Analiz sırasında bir hata oluştu');
+                }
+                
+                const data = await response.json();
+                
+                // Yükleniyor animasyonunu gizle
+                loading.classList.remove('show');
+                
+                // Sonuçları göster
+                displayResults(data.queen_status, data.confidence, 'audio');
+                
+            } catch (error) {
+                loading.classList.remove('show');
+                alert('Hata: ' + error.message);
+            }
+        }
+
+        // Görsel analizi
+        async function analyzeImage(file) {
+            const loading = document.getElementById('loading');
+            const results = document.getElementById('results');
+            
+            // Önceki sonuçları temizle
+            results.classList.remove('show');
+            
+            // Yükleniyor animasyonunu göster
+            loading.classList.add('show');
+            
+            try {
+                const formData = new FormData();
+                formData.append('file', file);
+
+                const response = await fetch('/analyze/image', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Analiz sırasında bir hata oluştu');
+                }
+                
+                const data = await response.json();
+                
+                // Yükleniyor animasyonunu gizle
+                loading.classList.remove('show');
+                
+                // Sonuçları göster
+                displayResults(data.queen_status, data.confidence, 'image');
+                
+            } catch (error) {
+                loading.classList.remove('show');
+                alert('Hata: ' + error.message);
+            }
+        }
+
+        // Dosya boyutunu formatla
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+        }
+
+        // Ses dosyası seçildiğinde
+        let currentAudioFile = null;
+        let audioBarInterval = null;
+
+        document.getElementById("audioFile").addEventListener("change", e => {
+            const file = e.target.files[0];
+            if (file) {
+                currentAudioFile = file;
+                
+                // Dosya bilgilerini göster
+                document.getElementById('audioFileName').textContent = file.name;
+                document.getElementById('audioFileSize').textContent = formatFileSize(file.size);
+                document.getElementById('audioFileInfo').classList.add('show');
+                
+                // Upload alanını gizle
+                document.getElementById('audioUploadArea').style.display = 'none';
+                
+                // Visualizer'ı göster
+                const visualizer = document.getElementById('audioVisualizer');
+                visualizer.style.display = 'flex';
+                
+                // Rastgele bar animasyonu
+                visualizer.innerHTML = '';
+                for (let i = 0; i < 35; i++) {
+                    const bar = document.createElement('div');
+                    bar.className = 'bar';
+                    const height = Math.random() * 60 + 15;
+                    bar.style.height = height + 'px';
+                    bar.style.animationDelay = (i * 0.05) + 's';
+                    visualizer.appendChild(bar);
+                }
+                
+                // Animate bars
+                if (audioBarInterval) clearInterval(audioBarInterval);
+                audioBarInterval = setInterval(() => {
+                    visualizer.querySelectorAll('.bar').forEach(bar => {
+                        bar.style.height = (Math.random() * 60 + 15) + 'px';
+                    });
+                }, 200);
+                
+                // Butonu aktif et
+                document.getElementById("analyzeAudio").disabled = false;
+                document.getElementById("analyzeAudio").onclick = () => analyzeAudio(file);
+            }
+        });
+
+        // Ses dosyasını sil
+        document.getElementById("removeAudioFile").addEventListener("click", (e) => {
+            e.stopPropagation();
+            currentAudioFile = null;
+            document.getElementById('audioFile').value = '';
+            document.getElementById('audioFileInfo').classList.remove('show');
+            document.getElementById('audioUploadArea').style.display = 'block';
+            document.getElementById('audioVisualizer').style.display = 'none';
+            document.getElementById("analyzeAudio").disabled = true;
+            if (audioBarInterval) clearInterval(audioBarInterval);
+        });
+
+        // Görsel dosyası seçildiğinde
+        let currentImageFile = null;
+
+        document.getElementById("imageFile").addEventListener("change", e => {
+            const file = e.target.files[0];
+            if (file) {
+                currentImageFile = file;
+                
+                // Dosya bilgilerini göster
+                document.getElementById('imageFileName').textContent = file.name;
+                document.getElementById('imageFileSize').textContent = formatFileSize(file.size);
+                document.getElementById('imageFileInfo').classList.add('show');
+                
+                // Upload alanını gizle
+                document.getElementById('imageUploadArea').style.display = 'none';
+                
+                // Önizleme göster
+                const preview = document.getElementById('imagePreview');
+                const previewImg = document.getElementById('previewImg');
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+                
+                // Butonu aktif et
+                document.getElementById("analyzeImage").disabled = false;
+                document.getElementById("analyzeImage").onclick = () => analyzeImage(file);
+            }
+        });
+
+        // Görsel dosyasını sil
+        document.getElementById("removeImageFile").addEventListener("click", (e) => {
+            e.stopPropagation();
+            currentImageFile = null;
+            document.getElementById('imageFile').value = '';
+            document.getElementById('imageFileInfo').classList.remove('show');
+            document.getElementById('imageUploadArea').style.display = 'block';
+            document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById("analyzeImage").disabled = true;
+        });
+
+        // Mod değiştirme (arı tıklandığında)
+        let currentMode = 'audio';
+        document.getElementById('modeSwitcher').addEventListener('click', () => {
+            const audioMode = document.getElementById('audioMode');
+            const imageMode = document.getElementById('imageMode');
+            const modeIndicator = document.getElementById('modeIndicator');
+            const results = document.getElementById('results');
+            
+            // Sonuçları gizle
+            results.classList.remove('show');
+            
+            if (currentMode === 'audio') {
+                audioMode.classList.remove('active');
+                imageMode.classList.add('active');
+                modeIndicator.textContent = 'Ses Analizi';
+                currentMode = 'image';
+            } else {
+                imageMode.classList.remove('active');
+                audioMode.classList.add('active');
+                modeIndicator.textContent = 'Görsel Analiz';
+                currentMode = 'audio';
+            }
+        });
+    </script>
+</body>
+</html>
