@@ -864,19 +864,17 @@
 
                 <div class="mode-transition active" id="audioMode">
                     <div class="card-header">
-                        <span class="card-icon">🎵</span>
                         <h2 class="card-title">Ses Analizi</h2>
                     </div>
 
                     <p class="card-description">
                         Arı kovanınızdan kaydettiğiniz ses dosyasını yükleyerek kovan sağlığını analiz edin.
-                        Gelişmiş yapay zeka algoritmaları ile arıların davranış kalıplarını ve sağlık durumunu değerlendiriyoruz.
                     </p>
 
                     <div class="upload-area" id="audioUploadArea" onclick="document.getElementById('audioFile').click()">
                         <div class="upload-icon">🎤</div>
                         <p class="upload-text">Ses dosyasını buraya sürükleyin veya tıklayın</p>
-                        <p class="upload-subtext">Desteklenen formatlar: WAV, MP3, M4A (Maks. 10MB)</p>
+                        <p class="upload-subtext">Desteklenen formatlar: WAV</p>
                     </div>
                     <input type="file" id="audioFile" class="file-input" accept=".wav,.mp3,.m4a" />
 
@@ -900,19 +898,17 @@
 
                 <div class="mode-transition" id="imageMode">
                     <div class="card-header">
-                        <span class="card-icon">📸</span>
                         <h2 class="card-title">Görsel Analizi</h2>
                     </div>
 
                     <p class="card-description">
-                        Arı fotoğraflarını yükleyerek detaylı görsel sağlık analizi yapın.
-                        Bilgisayarlı görü teknolojisi ile arıların fiziksel durumunu ve hastalık belirtilerini tespit ediyoruz.
+                        Arı fotoğraflarını yükleyerek detaylı görsel hastalık analizi yapın.
                     </p>
 
                     <div class="upload-area" id="imageUploadArea" onclick="document.getElementById('imageFile').click()">
                         <div class="upload-icon">📷</div>
                         <p class="upload-text">Arı fotoğrafını buraya sürükleyin veya tıklayın</p>
-                        <p class="upload-subtext">Desteklenen formatlar: JPG, PNG, WEBP (Maks. 5MB)</p>
+                        <p class="upload-subtext">Desteklenen formatlar: JPG, PNG</p>
                     </div>
                     <input type="file" id="imageFile" class="file-input" accept=".jpg,.jpeg,.png,.webp" />
 
@@ -958,6 +954,16 @@
             3: "Yeni kraliçe arı kabul edilmiş"
         };
 
+        // GÖRSEL ANALİZ (Hastalık/Durum) sonuçları için TÜRKÇE çeviri haritası
+        const imageResultMap = {
+            "Varroa, Small Hive Beetles": { tr: "Varroa Akarları, Küçük Kovan Böcekleri", class: "critical", icon: "🦠" },
+            "ant problems": { tr: "Karınca Sorunları", class: "warning", icon: "🐜" },
+            "few varrao, hive beetles": { tr: "Az Sayıda Varroa/Kovan Böceği", class: "warning", icon: "🐞" },
+            "healthy": { tr: "Sağlıklı", class: "healthy", icon: "💚" },
+            "hive being robbed": { tr: "Kovan Yağmalanıyor", class: "critical", icon: "🚨" },
+            "missing queen": { tr: "Kraliçe Kayıp", class: "critical", icon: "👑" }
+        };
+
         // Sonuçları ekranda göster
         function displayResults(queenStatus, confidence, type) {
             const resultsContent = document.getElementById('resultsContent');
@@ -998,14 +1004,6 @@
                 </div>
                 
                 <div class="result-item ${statusClass}">
-                    <div class="result-icon">📊</div>
-                    <div class="result-text">
-                        <div class="result-value">Güven Skoru: %${confidencePercent}</div>
-                        <div class="result-description">${statusMessage}</div>
-                    </div>
-                </div>
-                
-                <div class="result-item ${statusClass}">
                     <div class="result-icon">${type === 'audio' ? '🎵' : '📸'}</div>
                     <div class="result-text">
                         <div class="result-value">Analiz Türü</div>
@@ -1018,6 +1016,63 @@
             document.getElementById('results').classList.add('show');
             document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
+
+        // ... (displayResults fonksiyonu burada bitiyor) ...
+
+    // Görsel Analiz Sonuçlarını ekranda göster (Hastalık/Durum)
+        function displayImageResults(className, confidence, type) {
+            const resultsContent = document.getElementById('resultsContent');
+            
+            // Map'ten çeviri ve stil bilgilerini al
+            const resultData = imageResultMap[className] || { 
+                tr: className, 
+                class: 'warning', 
+                icon: '❓', 
+                healthMessage: 'Analiz edilen arı durumu için ek bilgi gerekebilir.' 
+            };
+
+            const statusClass = resultData.class;
+            const icon = resultData.icon;
+            const statusText = resultData.tr;
+            
+            // Özel durum mesajları
+            let healthMessage;
+            if (statusClass === 'healthy') {
+                healthMessage = 'Arı görünümü çok sağlıklı olarak sınıflandırıldı. Mükemmel!';
+            } else if (statusClass === 'critical') {
+                healthMessage = 'Ciddi sorunlar tespit edildi! Acil müdahale ve detaylı kontrol önerilir.';
+            } else if (statusClass === 'warning') {
+                healthMessage = 'Dikkat edilmesi gereken bir durum tespit edildi. Takip önerilir.';
+            } else {
+                healthMessage = resultData.healthMessage || 'Analiz edilen arı durumu için ek bilgi gerekebilir.';
+            }
+
+            const confidencePercent = (confidence * 100).toFixed(1);
+            
+            resultsContent.innerHTML = `
+                <div class="result-item ${statusClass}">
+                    <div class="result-icon">${icon}</div>
+                    <div class="result-text">
+                        <div class="result-value">Hastalık/Durum Sınıfı</div>
+                        <div class="result-description">${statusText}</div>
+                    </div>
+                </div>
+                
+                
+                <div class="result-item ${statusClass}">
+                    <div class="result-icon">📸</div>
+                    <div class="result-text">
+                        <div class="result-value">Analiz Türü</div>
+                        <div class="result-description">Görsel (Arı Hastalığı) Analizi</div>
+                    </div>
+                </div>
+            `;
+            
+            // Sonuçları göster
+            document.getElementById('results').classList.add('show');
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+ 
 
         // Ses analizi
         async function analyzeAudio(file) {
@@ -1086,8 +1141,8 @@
                 // Yükleniyor animasyonunu gizle
                 loading.classList.remove('show');
                 
-                // Sonuçları göster
-                displayResults(data.queen_status, data.confidence, 'image');
+                // Görsel sonuçları göstermek için yeni fonksiyonu çağır
+                displayImageResults(data.class_name, data.confidence, 'image');
                 
             } catch (error) {
                 loading.classList.remove('show');
